@@ -31,8 +31,16 @@ for y in grubline:
 system = input("please enter your system (linux/arch)")
 #cross compatibility (eventually)
 grubupdate = 'sudo update-grub'
+vfio = 'vfio_pci vfio vfio_iommu_type1 vfio_virqfd'
 if system == "linux":
     os.system(grubupdate)
 elif system == "arch":
     os.system(grubupdate)
-
+    with open('mkinitcpio.conf') as loadfile:
+        loadline = [i.strip() for i in loadline]
+    for it in loadline:
+        x = re.search('^MODULES=(".*"', it)
+    if syntax_correct:
+        print("Editing kernal modules")
+        kernal_modules = re.sub('"', vfio, it, 1)
+        print(kernal_modules)
