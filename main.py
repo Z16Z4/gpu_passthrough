@@ -29,16 +29,21 @@ for y in grubline:
             line=line.replace(y, editedgrub)
             print(line.strip())
 system = input("please enter your system (linux/arch)")
-#cross compatibility (eventually)
+#updating grub (sudo user)
 grubupdate = 'sudo update-grub'
+#kernal modules
 vfio = 'vfio_pci vfio vfio_iommu_type1 vfio_virqfd'
+#cross compatibility (eventually)
 if system == "linux":
     os.system(grubupdate)
 elif system == "arch":
     os.system(grubupdate)
+    #opening kernal configuration
     with open('example.conf') as loadfile:
+        #modules in arrayline
         arrayline = [i.strip() for i in arrayline]
     for it in loadline:
+        #matching module load
         x = re.search('^MODULES=(".*"', it)
     if x:
         print("Editing kernal modules")
