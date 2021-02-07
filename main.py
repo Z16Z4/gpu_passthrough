@@ -3,6 +3,8 @@
 import fileinput
 import re
 import sys
+import os
+from sys import platform
 print("Enter intel or amd depending on your cpu make")
 cpu = input("Please enter your cpu brand:")
 file_name = 'grub' #this will be /etc/default/grub once deployed
@@ -26,4 +28,11 @@ for y in grubline:
         for line in fileinput.FileInput('grub', inplace=1):
             line=line.replace(y, editedgrub)
             print(line.strip())
+system = input("please enter your system (linux/arch)")
+#cross compatibility (eventually)
+grubupdate = 'sudo update-grub'
+if system == "linux":
+    os.system(grubupdate)
+elif system == "arch":
+    os.system(grubupdate)
 
