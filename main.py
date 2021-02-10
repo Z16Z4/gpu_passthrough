@@ -44,6 +44,19 @@ if system == "arch":
         kernal_changes = [p.strip() for p in loadfile]
         for it in kernal_changes:
             n = re.search('^MODULES=(.*)$', it)
+            hooks = re.search(r"\bmodcon\w+", it)
+            hook = "modconf"
+            if hooks:
+                print("modconf was detected")
+                print(hooks)
+            else:
+                #IF PROGRAM DOESNT DETECT MODCONF HOOK THIS SECTION WILL ADD IT 
+                #all_hooks = re.search('^HOOKS=', hook, it, 1)
+                #print(all_hooks)
+                #for hook_line in fileinput.FileInput('example.conf', inplace=1):
+                #   hook_line=hook_line.replace(it, all_hooks)
+                #   print("Editing hooks")
+                #   print(hook_line.strip())
             if n:
                 print("Editing kernal modules")
                 kernal_modules = re.sub('\s', vfio, it, 1)
@@ -53,3 +66,4 @@ if system == "arch":
                     print("Edited configurations")
                     print(kernal_line.strip())
                     print(line.strip())
+            
