@@ -50,5 +50,6 @@ if system == "arch":
                 print(kernal_modules)
                 for kernal_line in fileinput.FileInput('example.conf', inplace=1):
                     kernal_line=kernal_line.replace(it, kernal_modules)
+                    print("Edited configurations")
                     print(kernal_line.strip())
-            
+                    print(line.strip())
