@@ -49,3 +49,5 @@ elif system == "arch":
         print("Editing kernal modules")
         kernal_modules = re.sub('"', vfio, it, 1)
         print(kernal_modules)
+        print("test")
+        
