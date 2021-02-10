@@ -32,22 +32,21 @@ system = input("please enter your system (linux/arch)")
 #updating grub (sudo user)
 grubupdate = 'sudo update-grub'
 #kernal modules
-vfio = 'vfio_pci vfio vfio_iommu_type1 vfio_virqfd'
+vfio = ' vfio_pci vfio vfio_iommu_type1 vfio_virqfd '
 #cross compatibility (eventually)
 if system == "linux":
     os.system(grubupdate)
-elif system == "arch":
+if system == "arch":
     os.system(grubupdate)
     #opening kernal configuration
     with open('example.conf') as loadfile:
-        #modules in arrayline
-        arrayline = [i.strip() for i in arrayline]
-    for it in loadline:
-        #matching module load
-        x = re.search('^MODULES=(".*"', it)
-    if x:
-        print("Editing kernal modules")
-        kernal_modules = re.sub('"', vfio, it, 1)
-        print(kernal_modules)
-        print("test")
-        
+        kernal_changes = [p.strip() for p in loadfile]
+        for it in kernal_changes:
+            n = re.search('^MODULES=(.*)$', it)
+            if n:
+                print("Editing kernal modules")
+                kernal_modules = re.sub('\s', vfio, it, 1)
+                print(kernal_modules)
+                for kernal_line in fileinput.FileInput('example.conf', inplace=1):
+                    kernal_line=kernal_line.replace(it, kernal_modules)
+                    print(kernal_line.strip())
