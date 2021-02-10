@@ -36,6 +36,7 @@ vfio = ' vfio_pci vfio vfio_iommu_type1 vfio_virqfd '
 #cross compatibility (eventually)
 if system == "linux":
     os.system(grubupdate)
+    print("work in progress")
 if system == "arch":
     os.system(grubupdate)
     #opening kernal configuration
@@ -50,3 +51,4 @@ if system == "arch":
                 for kernal_line in fileinput.FileInput('example.conf', inplace=1):
                     kernal_line=kernal_line.replace(it, kernal_modules)
                     print(kernal_line.strip())
+            
