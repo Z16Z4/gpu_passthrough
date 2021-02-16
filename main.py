@@ -40,30 +40,31 @@ if system == "linux":
 if system == "arch":
     os.system(grubupdate)
     #opening kernal configuration
-    with open('example.conf') as loadfile:
+    with open('mkinitcpio.conf') as loadfile:
         kernal_changes = [p.strip() for p in loadfile]
         for it in kernal_changes:
             n = re.search('^MODULES=(.*)$', it)
-            hooks = re.search(r"\bmodcon\w+", it)
-            hook = "modconf"
-            if hooks:
-                print("modconf was detected")
-                print(hooks)
-            else:
-                #IF PROGRAM DOESNT DETECT MODCONF HOOK THIS SECTION WILL ADD IT 
-                #all_hooks = re.search('^HOOKS=', hook, it, 1)
-                #print(all_hooks)
-                #for hook_line in fileinput.FileInput('example.conf', inplace=1):
-                #   hook_line=hook_line.replace(it, all_hooks)
-                #   print("Editing hooks")
-                #   print(hook_line.strip())
-            if n:
+            if n: #if n is true after re.search then add modules
                 print("Editing kernal modules")
                 kernal_modules = re.sub('\s', vfio, it, 1)
                 print(kernal_modules)
-                for kernal_line in fileinput.FileInput('example.conf', inplace=1):
+                for kernal_line in fileinput.FileInput('mkinitcpio.conf', inplace=1):
                     kernal_line=kernal_line.replace(it, kernal_modules)
                     print("Edited configurations")
                     print(kernal_line.strip())
                     print(line.strip())
-            
+    with open('mkinitcpio.conf') as hookfile:
+        hook_changes = [z.strip() for z in hookfile]
+        for hook in hook_changes:
+            new_hook = 'modconf'
+            h = re.search('^HOOKS=(.*)$', hook)
+            if h:
+                print("Editing Hooks")
+                hook_edit = re.sub('\s', new_hook, h, 1)
+                print(hook_edit) #currently broken
+                for hook_line in fileinput.FileInput('mkinitcpio.conf', inplace=1):
+                    hook_line=hook_line.replace(h, hook_changes)
+                    print("Edited configurations")
+                    print(hook_line.strip())
+                    print(line.strip())
+
